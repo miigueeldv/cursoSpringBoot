@@ -2,10 +2,16 @@ package com.mdv.curso.product.infrastructure.api;
 
 import com.mdv.curso.mediator.Mediator;
 import com.mdv.curso.product.application.command.create.CreateProductRequest;
+import com.mdv.curso.product.application.command.delete.DeleteProductRequest;
+import com.mdv.curso.product.application.command.update.UpdateProductRequest;
+import com.mdv.curso.product.application.query.getAll.GetAllProductRequest;
+import com.mdv.curso.product.application.query.getAll.GetAllProductResponse;
 import com.mdv.curso.product.application.query.getById.GetProductByIdRequest;
 import com.mdv.curso.product.application.query.getById.GetProductByIdResponse;
+import com.mdv.curso.product.domain.Product;
 import com.mdv.curso.product.infrastructure.api.dto.ProductDto;
 import com.mdv.curso.product.infrastructure.api.mapper.ProductMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +30,10 @@ public class ProductController implements ProductApi {
 
     @GetMapping("")
     public ResponseEntity<List<ProductDto>> getAllProducts(@RequestParam(required = false) String pageSize) {
-        return ResponseEntity.ok(null);
+        GetAllProductResponse request=mediator.dispatch(new GetAllProductRequest());
+
+        List<ProductDto> products=request.getProducts().stream().map(productMapper::mapToProduct).toList();
+        return ResponseEntity.ok(products);
     }
 
     @GetMapping("/{id}")
@@ -38,7 +47,7 @@ public class ProductController implements ProductApi {
     }
 
     @PostMapping("")
-    public ResponseEntity<Void> saveProduct(@RequestBody ProductDto productDto) {
+    public ResponseEntity<Void> saveProduct(@RequestBody @Valid ProductDto productDto) {
 
         CreateProductRequest request = productMapper.mapToCreateProductRequest(productDto);
 
@@ -48,17 +57,17 @@ public class ProductController implements ProductApi {
     }
 
     @PutMapping("")
-    public ResponseEntity<Void> updateProduct(@RequestBody ProductDto productDto) {
+    public ResponseEntity<Void> updateProduct(@RequestBody @Valid ProductDto productDto) {
+        UpdateProductRequest request=productMapper.mapToCreateProductRequestUpdate(productDto);
+        mediator.dispatch(request);
         return ResponseEntity.noContent().build();
     }
 
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-
-
+        mediator.dispatch(new DeleteProductRequest(id));
         return ResponseEntity.noContent().build();
     }
-
 
 }

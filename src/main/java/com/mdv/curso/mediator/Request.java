@@ -1,4 +1,3 @@
 package com.mdv.curso.mediator;
 
-public interface Request<T> {
-}
+public interface Request<T> { }
