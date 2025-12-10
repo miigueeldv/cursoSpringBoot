@@ -1,4 +1,6 @@
-package com.mdv.curso.product.domain;
+package com.mdv.curso.product.domain.port;
+
+import com.mdv.curso.product.domain.entity.Product;
 
 import java.util.List;
 import java.util.Optional;

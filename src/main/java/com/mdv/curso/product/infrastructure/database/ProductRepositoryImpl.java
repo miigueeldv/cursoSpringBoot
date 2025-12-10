@@ -1,7 +1,7 @@
 package com.mdv.curso.product.infrastructure.database;
 
-import com.mdv.curso.product.domain.Product;
-import com.mdv.curso.product.domain.ProductRepository;
+import com.mdv.curso.product.domain.entity.Product;
+import com.mdv.curso.product.domain.port.ProductRepository;
 import com.mdv.curso.product.infrastructure.database.entity.ProductEntity;
 import com.mdv.curso.product.infrastructure.database.mapper.ProductEntityMapper;
 import lombok.RequiredArgsConstructor;

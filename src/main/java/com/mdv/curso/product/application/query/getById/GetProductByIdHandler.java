@@ -1,8 +1,9 @@
 package com.mdv.curso.product.application.query.getById;
 
 import com.mdv.curso.mediator.RequestHandler;
-import com.mdv.curso.product.domain.Product;
-import com.mdv.curso.product.domain.ProductRepository;
+import com.mdv.curso.product.domain.entity.Product;
+import com.mdv.curso.product.domain.exception.ProductNotFoundException;
+import com.mdv.curso.product.domain.port.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +15,7 @@ public class GetProductByIdHandler implements RequestHandler<GetProductByIdReque
 
     @Override
     public GetProductByIdResponse handle(GetProductByIdRequest request) {
-
-
-        Product product = productRepository.findById(request.getId()).orElseThrow(() -> new IllegalArgumentException("Product not found"));
-
+        Product product = productRepository.findById(request.getId()).orElseThrow(() -> new ProductNotFoundException("Product not found"));
         return new GetProductByIdResponse(product);
     }
 

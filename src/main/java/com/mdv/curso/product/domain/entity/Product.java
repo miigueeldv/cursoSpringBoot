@@ -1,4 +1,4 @@
-package com.mdv.curso.product.domain;
+package com.mdv.curso.product.domain.entity;
 
 import lombok.Builder;
 import lombok.Data;

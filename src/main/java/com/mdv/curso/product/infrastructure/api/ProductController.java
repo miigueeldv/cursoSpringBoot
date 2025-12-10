@@ -8,7 +8,6 @@ import com.mdv.curso.product.application.query.getAll.GetAllProductRequest;
 import com.mdv.curso.product.application.query.getAll.GetAllProductResponse;
 import com.mdv.curso.product.application.query.getById.GetProductByIdRequest;
 import com.mdv.curso.product.application.query.getById.GetProductByIdResponse;
-import com.mdv.curso.product.domain.Product;
 import com.mdv.curso.product.infrastructure.api.dto.ProductDto;
 import com.mdv.curso.product.infrastructure.api.mapper.ProductMapper;
 import jakarta.validation.Valid;

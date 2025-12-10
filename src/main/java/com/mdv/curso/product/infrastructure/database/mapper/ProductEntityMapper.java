@@ -1,6 +1,6 @@
 package com.mdv.curso.product.infrastructure.database.mapper;
 
-import com.mdv.curso.product.domain.Product;
+import com.mdv.curso.product.domain.entity.Product;
 import com.mdv.curso.product.infrastructure.database.entity.ProductEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
