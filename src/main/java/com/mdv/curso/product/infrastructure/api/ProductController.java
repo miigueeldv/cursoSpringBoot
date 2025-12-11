@@ -8,7 +8,9 @@ import com.mdv.curso.product.application.query.getAll.GetAllProductRequest;
 import com.mdv.curso.product.application.query.getAll.GetAllProductResponse;
 import com.mdv.curso.product.application.query.getById.GetProductByIdRequest;
 import com.mdv.curso.product.application.query.getById.GetProductByIdResponse;
+import com.mdv.curso.product.infrastructure.api.dto.CreateProductDto;
 import com.mdv.curso.product.infrastructure.api.dto.ProductDto;
+import com.mdv.curso.product.infrastructure.api.dto.UpdateProductDto;
 import com.mdv.curso.product.infrastructure.api.mapper.ProductMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +48,17 @@ public class ProductController implements ProductApi {
     }
 
     @PostMapping("")
-    public ResponseEntity<Void> saveProduct(@RequestBody @Valid ProductDto productDto) {
+    public ResponseEntity<Void> saveProduct(@RequestBody @Valid CreateProductDto productDto) {
+
+        CreateProductRequest request = productMapper.mapToCreateProductRequest(productDto);
+
+        mediator.dispatch(request);
+
+        return ResponseEntity.created(URI.create("/api/v1/products/".concat(productDto.getId().toString()))).build();
+    }
+
+    @PostMapping("/file")
+    public ResponseEntity<Void> saveProductWithFile(@ModelAttribute @Valid CreateProductDto productDto) {
 
         CreateProductRequest request = productMapper.mapToCreateProductRequest(productDto);
 
@@ -56,7 +68,14 @@ public class ProductController implements ProductApi {
     }
 
     @PutMapping("")
-    public ResponseEntity<Void> updateProduct(@RequestBody @Valid ProductDto productDto) {
+    public ResponseEntity<Void> updateProduct(@RequestBody @Valid UpdateProductDto productDto) {
+        UpdateProductRequest request=productMapper.mapToCreateProductRequestUpdate(productDto);
+        mediator.dispatch(request);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/file")
+    public ResponseEntity<Void> updateProductWithFile(@ModelAttribute @Valid UpdateProductDto productDto) {
         UpdateProductRequest request=productMapper.mapToCreateProductRequestUpdate(productDto);
         mediator.dispatch(request);
         return ResponseEntity.noContent().build();

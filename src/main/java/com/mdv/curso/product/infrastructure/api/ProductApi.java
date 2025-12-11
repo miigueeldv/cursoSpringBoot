@@ -1,7 +1,11 @@
 package com.mdv.curso.product.infrastructure.api;
 
+import com.mdv.curso.product.infrastructure.api.dto.CreateProductDto;
 import com.mdv.curso.product.infrastructure.api.dto.ProductDto;
+import com.mdv.curso.product.infrastructure.api.dto.UpdateProductDto;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,9 +18,13 @@ public interface ProductApi {
 
     ResponseEntity<ProductDto> getProductById(@PathVariable Long id);
 
-    ResponseEntity<Void> saveProduct(@RequestBody ProductDto productDto);
+    ResponseEntity<Void> saveProduct(@RequestBody CreateProductDto productDto);
 
-    ResponseEntity<Void> updateProduct(@RequestBody ProductDto productDto);
+    ResponseEntity<Void> saveProductWithFile(@ModelAttribute @Valid CreateProductDto productDto);
+
+    ResponseEntity<Void> updateProduct(@RequestBody UpdateProductDto productDto);
+
+    ResponseEntity<Void> updateProductWithFile(@ModelAttribute @Valid UpdateProductDto productDto);
 
     ResponseEntity<Void> deleteProduct(@PathVariable Long id);
 
