@@ -13,7 +13,15 @@ public class DeleteProductHandler implements RequestHandler<DeleteProductRequest
 
     @Override
     public Void handle(DeleteProductRequest request) {
+        System.out.println("Eliminando producto con id "+request.getId()+" de forma asíncrona" );
+        try {
+            Thread.sleep(5000); //Para simular que la petición tarde 5s
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         productRepository.deleteById(request.getId());
+
+        System.out.println("El producto con id "+request.getId()+" ha sido eliminado" );
         return null;
     }
 
