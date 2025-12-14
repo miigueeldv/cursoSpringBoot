@@ -22,6 +22,9 @@ public class FixProductsPriceSchedule {
                     product.setPrice(product.getPrice() * 1.1);
                     productRepository.upsert(product);
                 }
+                else{
+                    log.error("The product with id "+product.getId()+" doesnt have a price.");
+                }
         });
 
         log.info("Finished fixing products price schedule");
