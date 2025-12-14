@@ -1,1 +1,1 @@
-Este repositorio ha sido creado para la realización del curso de spring boot web de cero a experto creado por @DavinchiCoder (https://www.youtube.com/@davinchicoder), para reforzar conceptos que podrán ayudarme a la hora de resolver tareas en la empresa en la que estoy.
+Este repositorio ha sido creado para la realización del curso de spring boot web de cero a experto, creado por @DavinchiCoder (https://www.youtube.com/@davinchicoder), para reforzar conceptos que podrán ayudarme en el día a dia.
