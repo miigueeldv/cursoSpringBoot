@@ -19,27 +19,24 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class CreateProductHandler implements RequestHandler<CreateProductRequest, Void> {
+public class CreateProductHandler implements RequestHandler<CreateProductRequest, CreateProductResponse> {
 
     private final ProductRepository productRepository;
     private final FileUtils fileUtils;
 
     @Override
-    public Void handle(CreateProductRequest request) {
+    public CreateProductResponse handle(CreateProductRequest request) {
 
         String uniqueFileName= fileUtils.saveProductImage(request.getFile());
 
         Product product = Product.builder()
-                .id(request.getId())
                 .name(request.getName())
                 .description(request.getDescription())
                 .price(request.getPrice())
                 .image(uniqueFileName)
                 .build();
 
-        productRepository.upsert(product);
-
-        return null;
+        return new CreateProductResponse(productRepository.upsert(product));
     }
 
     @Override

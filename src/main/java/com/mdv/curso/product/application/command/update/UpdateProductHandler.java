@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class UpdateProductHandler implements RequestHandler<UpdateProductRequest,Void> {
+public class UpdateProductHandler implements RequestHandler<UpdateProductRequest,UpdateProductResponse> {
 
     private final ProductRepository productRepository;
     private final FileUtils fileUtils;
 
     @Override
-    public Void handle(UpdateProductRequest request) {
+    public UpdateProductResponse handle(UpdateProductRequest request) {
 
         String uniqueFileName= fileUtils.saveProductImage(request.getFile());
 
@@ -27,9 +27,7 @@ public class UpdateProductHandler implements RequestHandler<UpdateProductRequest
                 .image(uniqueFileName)
                 .build();
 
-        productRepository.upsert(product);
-
-        return null;
+        return new UpdateProductResponse(productRepository.upsert(product));
     }
 
     @Override

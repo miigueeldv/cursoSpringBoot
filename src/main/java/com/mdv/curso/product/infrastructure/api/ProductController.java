@@ -2,12 +2,15 @@ package com.mdv.curso.product.infrastructure.api;
 
 import com.mdv.curso.mediator.Mediator;
 import com.mdv.curso.product.application.command.create.CreateProductRequest;
+import com.mdv.curso.product.application.command.create.CreateProductResponse;
 import com.mdv.curso.product.application.command.delete.DeleteProductRequest;
 import com.mdv.curso.product.application.command.update.UpdateProductRequest;
+import com.mdv.curso.product.application.command.update.UpdateProductResponse;
 import com.mdv.curso.product.application.query.getAll.GetAllProductRequest;
 import com.mdv.curso.product.application.query.getAll.GetAllProductResponse;
 import com.mdv.curso.product.application.query.getById.GetProductByIdRequest;
 import com.mdv.curso.product.application.query.getById.GetProductByIdResponse;
+import com.mdv.curso.product.domain.entity.Product;
 import com.mdv.curso.product.infrastructure.api.dto.CreateProductDto;
 import com.mdv.curso.product.infrastructure.api.dto.ProductDto;
 import com.mdv.curso.product.infrastructure.api.dto.UpdateProductDto;
@@ -62,24 +65,30 @@ public class ProductController implements ProductApi {
     @Operation(summary = "Save product", description = "Save product")
     @PostMapping("")
     public ResponseEntity<Void> saveProduct(@RequestBody @Valid CreateProductDto productDto) {
-        log.info("Saving product with id: {}", productDto.getId());
+        log.info("Saving product");
         CreateProductRequest request = productMapper.mapToCreateProductRequest(productDto);
 
-        mediator.dispatch(request);
-        log.info("Saved product with id: {}", productDto.getId());
-        return ResponseEntity.created(URI.create("/api/v1/products/".concat(productDto.getId().toString()))).build();
+        CreateProductResponse response=mediator.dispatch(request);
+
+        Product productSaved=response.getProduct();
+
+        log.info("Saved product with id: {}", productSaved.getId());
+
+        return ResponseEntity.created(URI.create("/api/v1/products/".concat(productSaved.getId().toString()))).build();
     }
 
     @Operation(summary = "Save product with file", description = "Save product with file")
     @PostMapping("/file")
     public ResponseEntity<Void> saveProductWithFile(@ModelAttribute @Valid CreateProductDto productDto) {
-        log.info("Saving product with id: {} with file endpoint", productDto.getId());
+        log.info("Saving product");
         CreateProductRequest request = productMapper.mapToCreateProductRequest(productDto);
 
-        mediator.dispatch(request);
+        CreateProductResponse response=mediator.dispatch(request);
 
-        log.info("Saving product with id: {} with file endpoint", productDto.getId());
-        return ResponseEntity.created(URI.create("/api/v1/products/".concat(productDto.getId().toString()))).build();
+        Product productSaved=response.getProduct();
+
+        log.info("Saving product with id: {} with file endpoint", productSaved.getId());
+        return ResponseEntity.created(URI.create("/api/v1/products/".concat(productSaved.getId().toString()))).build();
     }
 
     @Operation(summary = "Update product", description = "Update product")
@@ -88,9 +97,9 @@ public class ProductController implements ProductApi {
         log.info("Updating product with id: {}", productDto.getId());
         UpdateProductRequest request=productMapper.mapToCreateProductRequestUpdate(productDto);
 
-        mediator.dispatch(request);
+        UpdateProductResponse response=mediator.dispatch(request);
 
-        log.info("Updated product with id: {}", productDto.getId());
+        log.info("Updated product with id: {}", response.getProduct().getId());
         return ResponseEntity.noContent().build();
     }
 

@@ -4,10 +4,10 @@ import com.mdv.curso.product.domain.entity.Product;
 import com.mdv.curso.product.domain.port.ProductRepository;
 import com.mdv.curso.product.infrastructure.database.entity.ProductEntity;
 import com.mdv.curso.product.infrastructure.database.mapper.ProductEntityMapper;
+import com.mdv.curso.product.infrastructure.database.repository.QueryProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,35 +15,23 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductRepositoryImpl implements ProductRepository {
 
-    private final List<ProductEntity> products = new ArrayList<>();
-
+    private final QueryProductRepository repository;
     private final ProductEntityMapper productEntityMapper;
 
 
     @Override
-    public void upsert(Product product) {
+    public Product upsert(Product product) {
         ProductEntity productEntity = productEntityMapper.mapToProductEntity(product);
-        products.removeIf(p -> p.getId().equals(productEntity.getId()));
-        products.add(productEntity);
+        ProductEntity productSaved = repository.save(productEntity);
+        return productEntityMapper.mapToProduct(productSaved);
     }
 
     @Override
-    public Optional<Product> findById(Long id) {
-        return products.stream()
-                .filter(p -> p.getId().equals(id))
-                .findFirst()
-                .map(productEntityMapper::mapToProduct);
-    }
+    public Optional<Product> findById(Long id) {return repository.findById(id).map(productEntityMapper::mapToProduct);}
 
     @Override
-    public List<Product> findAll() {
-        return products.stream()
-                .map(productEntityMapper::mapToProduct)
-                .toList();
-    }
+    public List<Product> findAll() {return repository.findAll().stream().map(productEntityMapper::mapToProduct).toList();}
 
     @Override
-    public void deleteById(Long id) {
-        products.removeIf(p -> p.getId().equals(id));
-    }
+    public void deleteById(Long id) {repository.deleteById(id);}
 }

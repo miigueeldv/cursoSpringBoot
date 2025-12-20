@@ -11,8 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 public class CreateProductDto {
 
-    private Long id;
-
     @NotBlank
     private String name;
 

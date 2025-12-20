@@ -5,7 +5,7 @@ import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 @Data
-public class UpdateProductRequest implements Request<Void> {
+public class UpdateProductRequest implements Request<UpdateProductResponse> {
 
     private Long id;
     private String name;

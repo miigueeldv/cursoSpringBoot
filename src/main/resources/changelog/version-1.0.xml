@@ -5,5 +5,27 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd" logicalFilePath="version-1.0">
 
+    <changeSet id="202512201448-001" author="miigueeldv">
+        <preConditions onFail="MARK_RAN">
+            <not><tableExists tableName="products"/></not>
+        </preConditions>
+        
+        <createTable tableName="products">
+            <column name="id" type="bigint"/>
+            <column name="name" type="text"/>
+            <column name="description" type="text"/>
+            <column name="price" type="double"/>
+            <column name="image" type="text"/>
+        </createTable>
+        <addPrimaryKey tableName="products" columnNames="id"/>
+    </changeSet>
+
+    <changeSet id="202512201457-002" author="miigueeldv">
+        <preConditions onFail="MARK_RAN">
+            <not><sequenceExists sequenceName="products_id_seq"/></not>
+        </preConditions>
+        <createSequence sequenceName="products_id_seq" startValue="1" incrementBy="1"/>
+        <addDefaultValue tableName="products" columnName="id" defaultValueSequenceNext="products_id_seq"/>
+    </changeSet>
 
 </databaseChangeLog>
