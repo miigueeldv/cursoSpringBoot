@@ -1,0 +1,62 @@
+[
+    {
+        "name": "Auriculares ANC",
+        "description": "Auriculares con cancelación de ruido y 30h de autonomía.",
+        "image": "01-headphones.jpg",
+        "price": 129.99
+    },
+    {
+        "name": "Teclado Mecánico RGB",
+        "description": "Teclado mecánico RGB con switches silenciosos y estructura metálica.",
+        "image": "02-keyboard.jpg",
+        "price": 89.5
+    },
+    {
+        "name": "Monitor 2K 165Hz",
+        "description": "Monitor 27\" 2K IPS con 165Hz, ideal para productividad y gaming.",
+        "image": "03-monitor.jpg",
+        "price": 279.0
+    },
+    {
+        "name": "Micrófono Studio USB",
+        "description": "Micrófono USB con calidad de estudio, compatible con PC y Mac.",
+        "image": "04-microfono.jpg",
+        "price": 69.9
+    },
+    {
+        "name": "Silla Ergonómica Pro",
+        "description": "Silla ergonómica con soporte lumbar y diseño transpirable.",
+        "image": "05-silla.jpg",
+        "price": 249.95
+    },
+    {
+        "name": "Ratón Óptico Pro",
+        "description": "Ratón inalámbrico con sensor óptico de alta precisión.",
+        "image": "06-mouse.jpg",
+        "price": 39.99
+    },
+    {
+        "name": "Base Cooler Laptop",
+        "description": "Base refrigeradora con 3 ventiladores para portátiles hasta 17\".",
+        "image": "07-base-refrigerada.jpg",
+        "price": 24.99
+    },
+    {
+        "name": "Hub USB-C 6 en 1",
+        "description": "Hub USB-C con HDMI, lector SD y 3 puertos USB 3.0.",
+        "image": "08-hub.jpg",
+        "price": 34.95
+    },
+    {
+        "name": "Altavoces Bluetooth 30W",
+        "description": "Altavoces estéreo con subwoofer de 30W y conexión Bluetooth.",
+        "image": "09-altavoces.jpg",
+        "price": 59.99
+    },
+    {
+        "name": "Webcam Full HD",
+        "description": "Webcam Full HD con enfoque automático y micrófono integrado.",
+        "image": "010-webcam.jpg",
+        "price": 49.99
+    }
+]
