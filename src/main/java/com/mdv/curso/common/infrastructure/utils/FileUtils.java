@@ -1,4 +1,4 @@
-package com.mdv.curso.utils;
+package com.mdv.curso.common.infrastructure.utils;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;

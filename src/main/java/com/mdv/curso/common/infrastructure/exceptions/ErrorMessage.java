@@ -1,4 +1,4 @@
-package com.mdv.curso.mediator.exceptions;
+package com.mdv.curso.common.infrastructure.exceptions;
 
 import lombok.Data;
 

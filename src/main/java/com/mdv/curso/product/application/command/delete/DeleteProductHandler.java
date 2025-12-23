@@ -1,6 +1,6 @@
 package com.mdv.curso.product.application.command.delete;
 
-import com.mdv.curso.mediator.RequestHandler;
+import com.mdv.curso.common.application.mediator.RequestHandler;
 import com.mdv.curso.product.domain.port.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

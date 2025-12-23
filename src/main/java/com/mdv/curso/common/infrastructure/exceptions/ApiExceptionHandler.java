@@ -1,4 +1,4 @@
-package com.mdv.curso.mediator.exceptions;
+package com.mdv.curso.common.infrastructure.exceptions;
 
 import com.mdv.curso.product.domain.exception.ProductNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;

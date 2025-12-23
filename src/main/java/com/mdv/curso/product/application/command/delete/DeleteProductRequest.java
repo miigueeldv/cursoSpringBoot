@@ -1,6 +1,6 @@
 package com.mdv.curso.product.application.command.delete;
 
-import com.mdv.curso.mediator.Request;
+import com.mdv.curso.common.application.mediator.Request;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

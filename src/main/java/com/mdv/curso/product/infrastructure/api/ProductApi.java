@@ -1,5 +1,6 @@
 package com.mdv.curso.product.infrastructure.api;
 
+import com.mdv.curso.common.domain.PaginationResult;
 import com.mdv.curso.product.infrastructure.api.dto.CreateProductDto;
 import com.mdv.curso.product.infrastructure.api.dto.ProductDto;
 import com.mdv.curso.product.infrastructure.api.dto.UpdateProductDto;
@@ -14,7 +15,7 @@ import java.util.List;
 
 public interface ProductApi {
 
-    ResponseEntity<List<ProductDto>> getAllProducts(@RequestParam(required = false) String pageSize);
+    ResponseEntity<PaginationResult<ProductDto>> getAllProducts(@RequestParam(defaultValue = "0") int pageNumber, @RequestParam(defaultValue= "5") int pageSize);
 
     ResponseEntity<ProductDto> getProductById(@PathVariable Long id);
 

@@ -13,6 +13,7 @@ public class FixProductsPriceSchedule {
 
     private final ProductRepository productRepository;
 
+    /*+
     @Scheduled(fixedRate = 10000)
     public void fixProductsPriceSchedule() {
         log.info("Fixing products price schedule");
@@ -29,5 +30,6 @@ public class FixProductsPriceSchedule {
 
         log.info("Finished fixing products price schedule");
     }
+    **/
 
 }

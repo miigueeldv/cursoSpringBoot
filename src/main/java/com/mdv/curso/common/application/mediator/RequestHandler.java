@@ -1,4 +1,4 @@
-package com.mdv.curso.mediator;
+package com.mdv.curso.common.application.mediator;
 
 public interface RequestHandler<T extends Request<R>, R> {
 

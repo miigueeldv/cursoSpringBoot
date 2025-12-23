@@ -1,6 +1,8 @@
 package com.mdv.curso.product.application.query.getAll;
 
-import com.mdv.curso.mediator.RequestHandler;
+import com.mdv.curso.common.application.mediator.RequestHandler;
+import com.mdv.curso.common.domain.PaginationResult;
+import com.mdv.curso.product.domain.entity.Product;
 import com.mdv.curso.product.domain.port.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +16,8 @@ public class GetAllProductHandler implements RequestHandler<GetAllProductRequest
     @Override
     public GetAllProductResponse handle(GetAllProductRequest request) {
 
-        return new GetAllProductResponse(productRepository.findAll());
+        PaginationResult<Product> products=productRepository.findAll(request.getPaginationQuery());
+        return new GetAllProductResponse(products);
     }
 
     @Override

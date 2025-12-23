@@ -1,9 +1,9 @@
 package com.mdv.curso.product.application.command.update;
 
-import com.mdv.curso.mediator.RequestHandler;
+import com.mdv.curso.common.application.mediator.RequestHandler;
 import com.mdv.curso.product.domain.entity.Product;
 import com.mdv.curso.product.domain.port.ProductRepository;
-import com.mdv.curso.utils.FileUtils;
+import com.mdv.curso.common.infrastructure.utils.FileUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

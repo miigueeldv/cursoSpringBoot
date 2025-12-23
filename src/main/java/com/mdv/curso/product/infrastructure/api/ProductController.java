@@ -1,6 +1,8 @@
 package com.mdv.curso.product.infrastructure.api;
 
-import com.mdv.curso.mediator.Mediator;
+import com.mdv.curso.common.application.mediator.Mediator;
+import com.mdv.curso.common.domain.PaginationQuery;
+import com.mdv.curso.common.domain.PaginationResult;
 import com.mdv.curso.product.application.command.create.CreateProductRequest;
 import com.mdv.curso.product.application.command.create.CreateProductResponse;
 import com.mdv.curso.product.application.command.delete.DeleteProductRequest;
@@ -39,14 +41,23 @@ public class ProductController implements ProductApi {
 
     @Operation(summary = "Get all products", description = "Get all products")
     @GetMapping("")
-    public ResponseEntity<List<ProductDto>> getAllProducts(@RequestParam(required = false) String pageSize) {
+    public ResponseEntity<PaginationResult<ProductDto>> getAllProducts(@RequestParam(defaultValue = "0") int pageNumber,
+                                                            @RequestParam(defaultValue= "5") int pageSize){
         log.info("Getting all products");
-        GetAllProductResponse request=mediator.dispatch(new GetAllProductRequest());
+        GetAllProductResponse response=mediator.dispatch(new GetAllProductRequest(new PaginationQuery(pageNumber,pageSize)));
 
-        List<ProductDto> products=request.getProducts().stream().map(productMapper::mapToProduct).toList();
-        log.info("Found {} products", products.size());
+        PaginationResult<Product> productsPagination=response.getProductsPage();
+        log.info("Found {} products", productsPagination.getTotalElements());
 
-        return ResponseEntity.ok(products);
+        PaginationResult<ProductDto> paginationDto=new PaginationResult<>(
+                productsPagination.getContent().stream().map(productMapper::mapToProduct).toList(),
+                productsPagination.getPage(),
+                productsPagination.getSize(),
+                productsPagination.getTotalPages(),
+                productsPagination.getTotalElements()
+        );
+
+        return ResponseEntity.ok(paginationDto);
     }
 
     @Operation(summary = "Get product by id", description = "Get Product by id")

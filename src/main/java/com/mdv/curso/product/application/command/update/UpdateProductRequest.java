@@ -1,6 +1,6 @@
 package com.mdv.curso.product.application.command.update;
 
-import com.mdv.curso.mediator.Request;
+import com.mdv.curso.common.application.mediator.Request;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 

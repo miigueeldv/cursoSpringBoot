@@ -1,5 +1,7 @@
 package com.mdv.curso.product.domain.port;
 
+import com.mdv.curso.common.domain.PaginationQuery;
+import com.mdv.curso.common.domain.PaginationResult;
 import com.mdv.curso.product.domain.entity.Product;
 import com.mdv.curso.product.infrastructure.database.entity.ProductEntity;
 
@@ -12,7 +14,7 @@ public interface ProductRepository {
 
     Optional<Product> findById(Long id);
 
-    List<Product> findAll();
+    PaginationResult<Product> findAll(PaginationQuery paginationQuery);
 
     void deleteById(Long id);
 }
