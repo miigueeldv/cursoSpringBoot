@@ -3,14 +3,17 @@ package com.mdv.curso.product.infrastructure.database;
 import com.mdv.curso.common.domain.PaginationQuery;
 import com.mdv.curso.common.domain.PaginationResult;
 import com.mdv.curso.product.domain.entity.Product;
+import com.mdv.curso.product.domain.entity.ProductFilter;
 import com.mdv.curso.product.domain.port.ProductRepository;
 import com.mdv.curso.product.infrastructure.database.entity.ProductEntity;
+import com.mdv.curso.product.infrastructure.database.entity.ProductSpecification;
 import com.mdv.curso.product.infrastructure.database.mapper.ProductEntityMapper;
 import com.mdv.curso.product.infrastructure.database.repository.QueryProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -34,7 +37,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     public Optional<Product> findById(Long id) {return repository.findById(id).map(productEntityMapper::mapToProduct);}
 
     @Override
-    public PaginationResult<Product> findAll(PaginationQuery paginationQuery) {
+    public PaginationResult<Product> findAll(PaginationQuery paginationQuery,ProductFilter productFilter) {
         PageRequest pageRequest = PageRequest.of(
                 paginationQuery.getPage(),
                 paginationQuery.getSize(),
@@ -42,7 +45,13 @@ public class ProductRepositoryImpl implements ProductRepository {
                 paginationQuery.getSortBy()
         );
 
-        Page<ProductEntity> page=repository.findAll(pageRequest);
+        Specification<ProductEntity> specification = Specification.allOf(
+                ProductSpecification.byName(productFilter.getName()).and(
+                ProductSpecification.byDescription(productFilter.getDescription())).and(
+                ProductSpecification.byPriceBetween(productFilter.getPriceMin(),productFilter.getPriceMax()))
+        );
+
+        Page<ProductEntity> page=repository.findAll(specification,pageRequest);
 
         return new PaginationResult<>(
                     page.getContent().stream().map(productEntityMapper::mapToProduct).toList(),

@@ -13,6 +13,7 @@ import com.mdv.curso.product.application.query.getAll.GetAllProductResponse;
 import com.mdv.curso.product.application.query.getById.GetProductByIdRequest;
 import com.mdv.curso.product.application.query.getById.GetProductByIdResponse;
 import com.mdv.curso.product.domain.entity.Product;
+import com.mdv.curso.product.domain.entity.ProductFilter;
 import com.mdv.curso.product.infrastructure.api.dto.CreateProductDto;
 import com.mdv.curso.product.infrastructure.api.dto.ProductDto;
 import com.mdv.curso.product.infrastructure.api.dto.UpdateProductDto;
@@ -43,9 +44,18 @@ public class ProductController implements ProductApi {
     public ResponseEntity<PaginationResult<ProductDto>> getAllProducts(@RequestParam(defaultValue = "0") int pageNumber,
                                                                        @RequestParam(defaultValue= "5") int pageSize,
                                                                        @RequestParam(defaultValue = "id") String sortBy,
-                                                                       @RequestParam(defaultValue = "ASC") String direction){
+                                                                       @RequestParam(defaultValue = "ASC") String direction,
+                                                                       @RequestParam(required = false) String name,
+                                                                       @RequestParam(required = false) String description,
+                                                                       @RequestParam(required = false) Double priceMin,
+                                                                       @RequestParam(required = false) Double priceMax){
         log.info("Getting all products");
-        GetAllProductResponse response=mediator.dispatch(new GetAllProductRequest(new PaginationQuery(pageNumber,pageSize,sortBy,direction)));
+
+        PaginationQuery paginationQuery=new PaginationQuery(pageNumber,pageSize,sortBy,direction);
+        ProductFilter productFilter=new ProductFilter(name,description,priceMin,priceMax);
+        GetAllProductRequest productRequest=new GetAllProductRequest(paginationQuery,productFilter);
+
+        GetAllProductResponse response=mediator.dispatch(productRequest);
 
         PaginationResult<Product> productsPagination=response.getProductsPage();
         log.info("Found {} products", productsPagination.getTotalElements());

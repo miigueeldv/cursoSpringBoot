@@ -15,7 +15,14 @@ import java.util.List;
 
 public interface ProductApi {
 
-    ResponseEntity<PaginationResult<ProductDto>> getAllProducts(@RequestParam(defaultValue = "0") int pageNumber, @RequestParam(defaultValue= "5") int pageSize,  @RequestParam(defaultValue = "id") String sortBy, @RequestParam(defaultValue = "ASC") String direction);
+    ResponseEntity<PaginationResult<ProductDto>> getAllProducts(@RequestParam(defaultValue = "0") int pageNumber,
+                                                                @RequestParam(defaultValue= "5") int pageSize,
+                                                                @RequestParam(defaultValue = "id") String sortBy,
+                                                                @RequestParam(defaultValue = "ASC") String direction,
+                                                                @RequestParam(required = false) String name,
+                                                                @RequestParam(required = false) String description,
+                                                                @RequestParam(required = false) Double priceMin,
+                                                                @RequestParam(required = false) Double priceMax);
 
     ResponseEntity<ProductDto> getProductById(@PathVariable Long id);
 
