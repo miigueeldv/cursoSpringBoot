@@ -26,7 +26,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/products")
@@ -42,9 +41,11 @@ public class ProductController implements ProductApi {
     @Operation(summary = "Get all products", description = "Get all products")
     @GetMapping("")
     public ResponseEntity<PaginationResult<ProductDto>> getAllProducts(@RequestParam(defaultValue = "0") int pageNumber,
-                                                            @RequestParam(defaultValue= "5") int pageSize){
+                                                                       @RequestParam(defaultValue= "5") int pageSize,
+                                                                       @RequestParam(defaultValue = "id") String sortBy,
+                                                                       @RequestParam(defaultValue = "ASC") String direction){
         log.info("Getting all products");
-        GetAllProductResponse response=mediator.dispatch(new GetAllProductRequest(new PaginationQuery(pageNumber,pageSize)));
+        GetAllProductResponse response=mediator.dispatch(new GetAllProductRequest(new PaginationQuery(pageNumber,pageSize,sortBy,direction)));
 
         PaginationResult<Product> productsPagination=response.getProductsPage();
         log.info("Found {} products", productsPagination.getTotalElements());
