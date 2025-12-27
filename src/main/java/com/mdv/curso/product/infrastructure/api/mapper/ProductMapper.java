@@ -7,6 +7,7 @@ import com.mdv.curso.product.infrastructure.api.dto.CreateProductDto;
 import com.mdv.curso.product.infrastructure.api.dto.ProductDto;
 import com.mdv.curso.product.infrastructure.api.dto.UpdateProductDto;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
 
@@ -17,6 +18,7 @@ public interface ProductMapper {
 
     UpdateProductRequest mapToCreateProductRequestUpdate(UpdateProductDto productDto);
 
+    @Mapping(target="provider",source = "productDetail.provider")
     ProductDto mapToProduct(Product product);
 
 }

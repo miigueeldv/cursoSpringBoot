@@ -1,5 +1,6 @@
 package com.mdv.curso.product.infrastructure.database.entity;
 
+import com.mdv.curso.productDetail.infrastructure.ProductDetailEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -25,5 +26,10 @@ public class ProductEntity {
 
     @Column(name="image")
     private String image;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "product_detail_id")
+    private ProductDetailEntity productDetailEntity;
+
 
 }

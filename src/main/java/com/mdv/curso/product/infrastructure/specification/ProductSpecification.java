@@ -1,5 +1,6 @@
-package com.mdv.curso.product.infrastructure.database.entity;
+package com.mdv.curso.product.infrastructure.specification;
 
+import com.mdv.curso.product.infrastructure.database.entity.ProductEntity;
 import org.springframework.data.jpa.domain.Specification;
 
 

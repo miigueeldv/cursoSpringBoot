@@ -11,5 +11,7 @@ public class ProductDto {
     private Double price;
     private String image;
 
+    private String provider;
+
 
 }

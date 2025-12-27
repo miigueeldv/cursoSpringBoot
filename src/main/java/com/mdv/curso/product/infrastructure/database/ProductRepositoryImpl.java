@@ -6,7 +6,7 @@ import com.mdv.curso.product.domain.entity.Product;
 import com.mdv.curso.product.domain.entity.ProductFilter;
 import com.mdv.curso.product.domain.port.ProductRepository;
 import com.mdv.curso.product.infrastructure.database.entity.ProductEntity;
-import com.mdv.curso.product.infrastructure.database.entity.ProductSpecification;
+import com.mdv.curso.product.infrastructure.specification.ProductSpecification;
 import com.mdv.curso.product.infrastructure.database.mapper.ProductEntityMapper;
 import com.mdv.curso.product.infrastructure.database.repository.QueryProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,9 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public Optional<Product> findById(Long id) {return repository.findById(id).map(productEntityMapper::mapToProduct);}
+    public Optional<Product> findById(Long id) {
+        return repository.findById(id).map(productEntityMapper::mapToProduct);
+    }
 
     @Override
     public PaginationResult<Product> findAll(PaginationQuery paginationQuery,ProductFilter productFilter) {

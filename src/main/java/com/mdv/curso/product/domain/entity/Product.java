@@ -1,5 +1,6 @@
 package com.mdv.curso.product.domain.entity;
 
+import com.mdv.curso.productDetail.domain.ProductDetail;
 import lombok.Builder;
 import lombok.Data;
 
@@ -13,5 +14,6 @@ public class Product {
     private Double price;
     private String image;
 
+    private ProductDetail productDetail;
 
 }
