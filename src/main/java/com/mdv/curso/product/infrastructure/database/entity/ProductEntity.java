@@ -1,9 +1,13 @@
 package com.mdv.curso.product.infrastructure.database.entity;
 
 import com.mdv.curso.productDetail.infrastructure.ProductDetailEntity;
+import com.mdv.curso.review.infrastructure.ReviewEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -30,6 +34,9 @@ public class ProductEntity {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "product_detail_id")
     private ProductDetailEntity productDetailEntity;
+
+    @OneToMany(mappedBy = "productEntity")
+    private List<ReviewEntity> reviews = new ArrayList<>();
 
 
 }

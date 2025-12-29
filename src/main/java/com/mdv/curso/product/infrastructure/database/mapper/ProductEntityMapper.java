@@ -2,6 +2,8 @@ package com.mdv.curso.product.infrastructure.database.mapper;
 
 import com.mdv.curso.product.domain.entity.Product;
 import com.mdv.curso.product.infrastructure.database.entity.ProductEntity;
+import com.mdv.curso.review.domain.Review;
+import com.mdv.curso.review.infrastructure.ReviewEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
@@ -18,4 +20,9 @@ public interface ProductEntityMapper {
     @Mapping(target="productDetail.product", ignore = true)
     Product mapToProduct(ProductEntity productEntity);
 
+    @Mapping(target = "product", ignore = true)
+    Review mapToReview(ReviewEntity reviewEntity);
+
+    @Mapping(target = "productEntity", ignore = true)
+    ReviewEntity mapToReviewEntity(Review review);
 }

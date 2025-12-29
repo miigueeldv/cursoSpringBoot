@@ -1,6 +1,10 @@
 package com.mdv.curso.product.infrastructure.api.dto;
 
+import com.mdv.curso.review.domain.Review;
 import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class ProductDto {
@@ -12,6 +16,8 @@ public class ProductDto {
     private String image;
 
     private String provider;
+
+    private List<ReviewDto> reviews=new ArrayList<>();
 
 
 }
