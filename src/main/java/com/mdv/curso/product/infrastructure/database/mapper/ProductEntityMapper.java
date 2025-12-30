@@ -6,10 +6,7 @@ import com.mdv.curso.product.domain.entity.Product;
 import com.mdv.curso.product.infrastructure.database.entity.ProductEntity;
 import com.mdv.curso.review.domain.Review;
 import com.mdv.curso.review.infrastructure.ReviewEntity;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingConstants;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING, unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface ProductEntityMapper {
@@ -33,4 +30,11 @@ public interface ProductEntityMapper {
 
     @Mapping(target = "products", ignore = true)
     CategoryEntity mapToReviewEntity(Category category);
+
+    @AfterMapping
+    default void linkReviews(@MappingTarget ProductEntity productEntity){
+        if (productEntity.getReviews() != null) {
+            productEntity.getReviews().forEach(r -> r.setProductEntity(productEntity));
+        }
+    }
 }

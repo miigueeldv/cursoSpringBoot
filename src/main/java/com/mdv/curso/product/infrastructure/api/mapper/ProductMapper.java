@@ -6,7 +6,9 @@ import com.mdv.curso.product.application.command.update.UpdateProductRequest;
 import com.mdv.curso.product.domain.entity.Product;
 import com.mdv.curso.product.infrastructure.api.dto.CreateProductDto;
 import com.mdv.curso.product.infrastructure.api.dto.ProductDto;
+import com.mdv.curso.product.infrastructure.api.dto.ReviewDto;
 import com.mdv.curso.product.infrastructure.api.dto.UpdateProductDto;
+import com.mdv.curso.review.domain.Review;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
@@ -23,6 +25,9 @@ public interface ProductMapper {
 
     @Mapping(target="provider",source = "productDetail.provider")
     ProductDto mapToProduct(Product product);
+
+    @Mapping(target = "product",ignore=true)
+    Review mapToReview(ReviewDto reviewDto);
 
     default List<String> mapToCategoryNames(List<Category> categories) {
         return categories.stream().map(Category::getName).toList();

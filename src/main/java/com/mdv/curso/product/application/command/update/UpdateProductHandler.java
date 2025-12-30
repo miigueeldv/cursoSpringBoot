@@ -1,9 +1,14 @@
 package com.mdv.curso.product.application.command.update;
 
+import com.mdv.curso.category.domain.Category;
+import com.mdv.curso.category.infrastructure.CategoryEntityMapper;
+import com.mdv.curso.category.infrastructure.QueryCategoryRepository;
 import com.mdv.curso.common.application.mediator.RequestHandler;
 import com.mdv.curso.product.domain.entity.Product;
+import com.mdv.curso.product.domain.exception.ProductNotFoundException;
 import com.mdv.curso.product.domain.port.ProductRepository;
 import com.mdv.curso.common.infrastructure.utils.FileUtils;
+import com.mdv.curso.productDetail.domain.ProductDetail;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,19 +18,22 @@ public class UpdateProductHandler implements RequestHandler<UpdateProductRequest
 
     private final ProductRepository productRepository;
     private final FileUtils fileUtils;
+    private final QueryCategoryRepository queryCategoryRepository;
+    private final CategoryEntityMapper categoryEntityMapper;
 
     @Override
     public UpdateProductResponse handle(UpdateProductRequest request) {
 
         String uniqueFileName= fileUtils.saveProductImage(request.getFile());
 
-        Product product = Product.builder()
-                .id(request.getId())
-                .name(request.getName())
-                .description(request.getDescription())
-                .price(request.getPrice())
-                .image(uniqueFileName)
-                .build();
+        Product product= productRepository.findById(request.getId()).orElseThrow(() -> new ProductNotFoundException(request.getId().toString()));
+
+        ProductDetail productDetail=product.getProductDetail();
+        productDetail.setProvider(request.getProvider());
+
+        product.getReviews().add(request.getReview());
+        Category category=queryCategoryRepository.findById(request.getCategoryId()).map(categoryEntityMapper::mapToCategory).orElseThrow(() -> new RuntimeException("Category not found"));
+        product.getCategories().add(category);
 
         return new UpdateProductResponse(productRepository.upsert(product));
     }

@@ -1,5 +1,6 @@
 package com.mdv.curso.product.infrastructure.api.dto;
 
+import com.mdv.curso.category.domain.Category;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -22,8 +23,9 @@ public class UpdateProductDto {
     @DecimalMin(value = "0.01")
     @DecimalMax(value = "9999.99", inclusive = false)
     private Double price;
-
     private MultipartFile file;
-
+    private String provider;
+    private ReviewDto review;
+    private Long categoryId;
 
 }
