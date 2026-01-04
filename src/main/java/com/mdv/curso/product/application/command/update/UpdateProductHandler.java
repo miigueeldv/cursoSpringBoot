@@ -9,11 +9,13 @@ import com.mdv.curso.product.domain.exception.ProductNotFoundException;
 import com.mdv.curso.product.domain.port.ProductRepository;
 import com.mdv.curso.common.infrastructure.utils.FileUtils;
 import com.mdv.curso.productDetail.domain.ProductDetail;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
+@Transactional(rollbackOn = Exception.class)
 public class UpdateProductHandler implements RequestHandler<UpdateProductRequest,UpdateProductResponse> {
 
     private final ProductRepository productRepository;
@@ -34,8 +36,11 @@ public class UpdateProductHandler implements RequestHandler<UpdateProductRequest
         product.getReviews().add(request.getReview());
         Category category=queryCategoryRepository.findById(request.getCategoryId()).map(categoryEntityMapper::mapToCategory).orElseThrow(() -> new RuntimeException("Category not found"));
         product.getCategories().add(category);
+        UpdateProductResponse response= new UpdateProductResponse(productRepository.upsert(product));
 
-        return new UpdateProductResponse(productRepository.upsert(product));
+        if (product.getId() == 8){throw new RuntimeException("Test transactional anotation when updating product");}
+
+        return response;
     }
 
     @Override

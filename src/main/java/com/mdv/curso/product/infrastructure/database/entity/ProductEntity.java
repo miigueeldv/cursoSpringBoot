@@ -43,5 +43,8 @@ public class ProductEntity {
     @JoinTable(name = "products_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<CategoryEntity> categories = new ArrayList<>();
 
+    public String toString(){
+        return name;
+    }
 
 }
